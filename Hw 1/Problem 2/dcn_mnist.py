@@ -80,7 +80,7 @@ def main():
 
     # placeholders for input data and input labeles
     x =
-    y_ =
+    y_ = #
 
     # reshape the input image
     x_image = tf.reshape(x, [-1, 28, 28, 1]

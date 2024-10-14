@@ -35,7 +35,7 @@ def plot_decision_boundary(pred_func, arr_x, y):
     # Plot the contour and training examples
     plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
     plt.scatter(arr_x[:, 0], arr_x[:, 1], c=y, cmap=plt.cm.Spectral)
-    plt.show()
+    plt.show() #
 
 
 ########################################################################################################################
