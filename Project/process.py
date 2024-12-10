@@ -79,6 +79,7 @@ class NSDDataset(tf.keras.utils.PyDataset):
                 if quick:
                     for nifti_run2 in os.listdir(nifti_path):
                         self.subj_run_batch_sizes[subject][nifti_run2] = run_n_batches
+                    idx += run_n_batches * (len(os.listdir(nifti_path)) - 1)
                     break
             print('Done')
         self.n_batches = idx
@@ -144,8 +145,13 @@ class NSDDataset(tf.keras.utils.PyDataset):
 
     def __len__(self):
         """ Return number of batches """
+        n_batch = 0
+        for subject in os.listdir(self.ppdata_path):
+            numpy_path = self.ppdata_path + '/' + subject + self.numpy_rel_path
+            n_batch += len(os.listdir(numpy_path))
+        return n_batch
         #return 200
-        return self.n_batches
+        #return self.n_batches
 
     def __getitem__(self, idx):
         """ Return mat_x and dummy variable y from batch """
