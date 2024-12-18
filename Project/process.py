@@ -78,7 +78,8 @@ class fMRIDataset(tf.keras.utils.PyDataset):
                 nifti_path = self.ppdata_path + '/' + subject + self.nifti_rel_path
 
                 # First pass: Indices and max dimensions
-                for nifti_run_path in glob.glob(nifti_path + '/*.nii'):
+                nifti_run_paths = glob.glob(nifti_path + '/*.nii') + glob.glob(nifti_path + '/*.nii.gz')
+                for nifti_run_path in nifti_run_paths:
                     nifti_run = nifti_run_path.split('/')[-1]
 
                     if run_idx % 10 == 0:
@@ -109,8 +110,8 @@ class fMRIDataset(tf.keras.utils.PyDataset):
                     idx += run_n_batches
                     run_idx += 1
                     if quick:
-                        self.subj_tot_samples[subject] *= len(glob.glob(nifti_path + '/*.nii'))
-                        for nifti_run_path2 in glob.glob(nifti_path + '/*.nii'):
+                        self.subj_tot_samples[subject] *= len(nifti_run_paths)
+                        for nifti_run_path2 in nifti_run_paths:
                             nifti_run2 = nifti_run_path2.split('/')[-1]
                             self.subj_run_batch_sizes[subject][nifti_run2] = run_n_batches
                         idx += run_n_batches * (len(glob.glob(nifti_path + '/*.nii')) - 1)
@@ -133,7 +134,8 @@ class fMRIDataset(tf.keras.utils.PyDataset):
                 nifti_path = self.ppdata_path + '/' + subject + self.nifti_rel_path
 
                 run_idx = 0
-                for nifti_run_path in glob.glob(nifti_path + '/*.nii'):
+                nifti_run_paths = glob.glob(nifti_path + '/*.nii') + glob.glob(nifti_path + '/*.nii.gz')
+                for nifti_run_path in nifti_run_paths:
                     nifti_run = nifti_run_path.split('/')[-1]
                     # if run_idx > 10: #
                     #     break
